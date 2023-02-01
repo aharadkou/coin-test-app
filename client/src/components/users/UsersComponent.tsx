@@ -11,6 +11,7 @@ const BALANCE_DIFF = 1000;
 
 export function UsersComponent({userInfo}: {userInfo: IUser}) {
   const [users, setUsers] = useState<IUser[]>([]);
+  const [isRequestInProgress, setRequestInProgress] = useState(false);
 
   useEffect(() => {
     if (userInfo) {
@@ -28,6 +29,12 @@ export function UsersComponent({userInfo}: {userInfo: IUser}) {
    }, [userInfo]);
 
   const handleAddTransaction = async (user: IUser, amount: number) => {
+    if (isRequestInProgress) {
+      return;
+    }
+
+    setRequestInProgress(true);
+
     await fetch(TRANSACTIONS_URL, {
       method: 'POST',
       headers: {
@@ -41,6 +48,8 @@ export function UsersComponent({userInfo}: {userInfo: IUser}) {
     })
 
     setUsers(updateUserBalance(users, user, amount));
+
+    setRequestInProgress(false);
   }
 
   return (
@@ -64,8 +73,8 @@ export function UsersComponent({userInfo}: {userInfo: IUser}) {
               { user.balance }
               <img src={coin} className='coin' alt='coin' />
               <div className='balance-controls'>
-                <img src={plus} role='button' alt='balance-increase' onClick={() => handleAddTransaction(user, BALANCE_DIFF)} />
-                <img src={minus} role='button' alt='balance-decrease' onClick={() => handleAddTransaction(user, -BALANCE_DIFF)} />
+                <img src={plus} role='button' alt='balance-increase' onClick={() => handleAddTransaction(user, BALANCE_DIFF)} className={isRequestInProgress ? 'disabled' : null} />
+                <img src={minus} role='button' alt='balance-decrease' onClick={() => handleAddTransaction(user, -BALANCE_DIFF)} className={isRequestInProgress ? 'disabled' : null}/>
               </div>
             </div>
           </div>

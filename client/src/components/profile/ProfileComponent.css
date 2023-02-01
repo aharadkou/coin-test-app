@@ -1,8 +1,8 @@
 .profile-wrapper {
     padding: 20px;
     display: flex;
-    flex-direction: row;
-    justify-content: space-around;
+    flex-direction: column;
+    align-items: center;
 }
 
 .users-list {
@@ -19,4 +19,11 @@
     width: 20px;
     height: 20px;
     cursor: pointer;
+}
+
+@media screen and (min-width: 800px) and (orientation: landscape) {
+    .profile-wrapper {
+        flex-direction: row;
+        justify-content: space-around;
+    }
 }
