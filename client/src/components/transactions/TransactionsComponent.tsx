@@ -17,7 +17,7 @@ export function TransactionsComponent({userInfo}: {userInfo: IUser}) {
   const setTimestampOfNewBonus = (transactions: ITransaction[]): void => {
     const lastBonusTransaction = findLastBonusTransaction(transactions);
 
-    const nextDayTimestamp = getNextDayTimestamp(lastBonusTransaction.dateIssued);
+    const nextDayTimestamp = getNextDayTimestamp(lastBonusTransaction?.dateIssued);
 
     setNewBonusTimestamp(nextDayTimestamp);
   }
