@@ -1,7 +1,8 @@
+import { useEffect, useState } from 'react';
+
 import { IUser } from '../../types/IUser';
 import './TransactionsComponent.css';
 import coin from '../../assets/coin.svg';
-import { useEffect, useState } from 'react';
 import { findLastBonusTransaction, getTransactionAmountSum } from '../../helpers/transactionHelpers';
 import { getNextDayTimestamp } from '../../helpers/dateHelpers';
 import { ITransaction } from '../../types/ITransaction';

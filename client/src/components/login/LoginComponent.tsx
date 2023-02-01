@@ -1,8 +1,9 @@
 import { useEffect } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
+
 import { TRANSACTIONS_URL, USER_INFO_URL } from '../../config';
 import { navigateToLogin } from '../../helpers/common';
-
+import cat from '../../assets/cat.png';
 import './LoginComponent.css';
 
 export function LoginComponent({setUserInfo}) {
@@ -45,7 +46,12 @@ export function LoginComponent({setUserInfo}) {
 
   return (
     <>
-      Redirecting you to the main app and applying your daily bonus...
+      <div className='message'>
+        Redirecting you to the main app and applying your daily bonus...
+      </div>
+      <div>
+        <img src={cat} alt="cat" />
+      </div>
     </>
   );
 }
