@@ -1,0 +1,53 @@
+:root {
+  --primary-color: #ccc;
+  --secondary-color: #a932c7;
+  --bg-color: #282c34;
+}
+
+button {
+  background: none;
+	color: inherit;
+	border: none;
+	padding: 10px;
+	font: inherit;
+	cursor: pointer;
+	outline: inherit;
+  color: var(--secondary-color);
+}
+
+.app {
+  background-color: var(--bg-color);
+  color: var(--primary-color);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.coin {
+  margin-left: 5px;
+  width: 16px;
+  height: 16px;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 10px;
+  padding: 4px;
+  border-bottom: 2px solid var(--secondary-color);
+}
+
+.row-field {
+  flex: 1 0 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.row-field .profit {
+  color: green;
+}
+
+.row-field .loss {
+  color: red;
+}

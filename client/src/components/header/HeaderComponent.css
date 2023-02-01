@@ -1,0 +1,22 @@
+header {
+    height: 20px;
+    background-color: var(--primary-color);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    color: var(--secondary-color);
+    padding: 10px;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+}
+
+.user-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+}

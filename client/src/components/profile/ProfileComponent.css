@@ -1,0 +1,22 @@
+.profile-wrapper {
+    padding: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.users-list {
+    width: 500px;
+}
+
+.balance-controls {
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px;
+}
+
+.balance-controls img {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
