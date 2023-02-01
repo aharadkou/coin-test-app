@@ -2,8 +2,9 @@
     functions="server/dist"
 
 [[redirects]]
-  from="/*"
-  to="/"
+    from="/profile"
+    to="/"
+    status=200
 
 [[redirects]]
     to="/.netlify/functions/app/api:splat"
