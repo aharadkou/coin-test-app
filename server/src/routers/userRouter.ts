@@ -1,34 +1,22 @@
 import express, { Request, Response } from 'express';
-import fetch from 'node-fetch';
 
-import { AUTH_APP_API_URL } from '../core/constants';
-import { IUser, UserRole } from '../core/types';
-import { getTransactions } from '../db/repositories/transactionRepository';
+import { UserRole } from '../core/types';
 import { authMiddleware } from '../middlewares/authMiddleware';
+import { getUsers } from '../services/userService';
+import { NO_ACCESS_ERROR } from '../core/constants';
 
 const userRouter = express.Router();
 
 userRouter.get('/', authMiddleware, async (request: Request, response: Response) => {
   const authHeader = request.headers.authorization;
 
-  if (request.loggedInUser?.role !== UserRole.ADMIN) {
-    return response.status(403).send({error: 'No access!'});
+  if (!request.loggedInUser || request.loggedInUser.role !== UserRole.ADMIN) {
+    return response.status(403).send({error: NO_ACCESS_ERROR});
   }
 
-  const usersResponse = await fetch(`${AUTH_APP_API_URL}/api/users`, {
-    headers: {
-      'Authorization': authHeader,
-    },
-  })
-  const users: IUser[] = await usersResponse.json();
+  const users = await getUsers(request.loggedInUser.id, authHeader);
 
-
-  const usersWithoutAdmin = users.filter(user => user.id !== request.loggedInUser?.id);
-
-  const transactions = await getTransactions();
-  const usersWithTransactions = usersWithoutAdmin.map((user) => ({...user, transactions: transactions.filter(transaction => transaction.userId === user.id)}));
-
-  response.json(usersWithTransactions);
+  response.json(users);
 });
 
 

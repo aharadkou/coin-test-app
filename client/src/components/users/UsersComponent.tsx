@@ -4,8 +4,9 @@ import plus from '../../assets/plus.svg';
 import minus from '../../assets/minus.svg';
 import coin from '../../assets/coin.svg';
 import { useEffect, useState } from 'react';
-import { TRANSACTIONS_URL, USERS_URL } from '../../config';
 import { updateUserBalance, updateUsersBalance } from '../../helpers/userHelpers';
+import { getUsers } from '../../services/userService';
+import { addTransaction } from '../../services/transactionService';
 
 const BALANCE_DIFF = 1000;
 
@@ -15,16 +16,7 @@ export function UsersComponent({userInfo}: {userInfo: IUser}) {
 
   useEffect(() => {
     if (userInfo) {
-      fetch(USERS_URL, {
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
-        }
-      })
-      .then(usersResponse => usersResponse.json())
-      .then((users: IUser[]) => {
-        setUsers(updateUsersBalance(users))
-      });
+      getUsers().then((users: IUser[]) => setUsers(updateUsersBalance(users)));
     }
    }, [userInfo]);
 
@@ -35,17 +27,7 @@ export function UsersComponent({userInfo}: {userInfo: IUser}) {
 
     setRequestInProgress(true);
 
-    await fetch(TRANSACTIONS_URL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
-      },
-      body: JSON.stringify({
-        userId: user.id,
-        amount,
-      })
-    })
+    await addTransaction(user, amount);
 
     setUsers(updateUserBalance(users, user, amount));
 

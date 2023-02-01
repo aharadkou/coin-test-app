@@ -1,32 +1,20 @@
 import { useEffect } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 
-import { TRANSACTIONS_URL, USER_INFO_URL } from '../../config';
-import { navigateToLogin } from '../../helpers/common';
-import cat from '../../assets/cat.png';
 import './LoginComponent.css';
+import cat from '../../assets/cat.png';
+
+import { navigateToLogin } from '../../helpers/common';
+import { getUserInfo } from '../../services/authService';
+import { applyDailyBonus } from '../../services/transactionService';
+import { getToken, setToken } from '../../services/tokenService';
 
 export function LoginComponent({setUserInfo}) {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
 
-  const applyDailyBonus = (token: string) => fetch(`${TRANSACTIONS_URL}/daily-bonus`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`
-    },
-  });
-
-  const getUserInfo = (token: string) => fetch(USER_INFO_URL, {
-    headers: {
-     'Content-Type': 'application/json',
-     'Authorization': `Bearer ${token}`
-    },
-  });
-
   useEffect(() => {
-   const existingToken = localStorage.getItem('auth_token');
+   const existingToken = getToken();
 
    const token = searchParams.get('token') ? decodeURIComponent(searchParams.get('token')) : existingToken;
 
@@ -34,24 +22,23 @@ export function LoginComponent({setUserInfo}) {
     return navigateToLogin();
    }
 
-   localStorage.setItem('auth_token', token);
+   setToken(token);
 
-   applyDailyBonus(token)
+   applyDailyBonus()
     .catch(() => navigateToLogin())
-    .then(() => getUserInfo(token))
-    .then(response => response.json())
-    .then(responseJson => setUserInfo(responseJson))
+    .then(() => getUserInfo())
+    .then(userInfo => setUserInfo(userInfo))
     .then(() => navigate('/profile'))
   }, [setUserInfo, searchParams, navigate]);
 
   return (
-    <>
+    <div>
       <div className='message'>
         Redirecting you to the main app and applying your daily bonus...
       </div>
       <div>
         <img src={cat} alt="cat" />
       </div>
-    </>
+    </div>
   );
 }

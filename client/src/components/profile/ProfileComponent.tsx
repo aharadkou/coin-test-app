@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+
 import './ProfileComponent.css';
 
 import { IUser } from '../../types/IUser';
@@ -8,7 +9,6 @@ import { TransactionsComponent } from '../transactions/TransactionsComponent';
 import { UsersComponent } from '../users/UsersComponent';
 
 export function ProfileComponent({userInfo}: {userInfo: IUser}) {
-
   const navigate = useNavigate();
 
   useEffect(() => {
