@@ -53,7 +53,7 @@ export function UsersComponent({userInfo}: {userInfo: IUser}) {
   }
 
   return (
-    <div className='users-list'>
+    <div className='list'>
       <h2>Users</h2>
       <div className='row'>
         <div className='row-field'>Username</div>

@@ -25,5 +25,6 @@
     .profile-wrapper {
         flex-direction: row;
         justify-content: space-around;
+        align-items: baseline;
     }
 }

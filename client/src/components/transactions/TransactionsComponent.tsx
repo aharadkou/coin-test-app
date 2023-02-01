@@ -40,7 +40,7 @@ export function TransactionsComponent({userInfo}: {userInfo: IUser}) {
   }, [newBonusTimestamp]);
 
   return (
-    <div className='transactions-list'>
+    <div className='list'>
     <h2>Your transactions</h2>
     <div className='row'>
         <div className='row-field'>Cash flow</div>
